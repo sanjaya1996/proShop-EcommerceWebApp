@@ -1,0 +1,30 @@
+{
+  "name": "ecommerce-proshop",
+  "version": "1.0.0",
+  "description": "MERN shopping cart app",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node backend/server",
+    "server": "nodemon backend/server",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanjaya1996/proShop-EcommerceWebApp.git"
+  },
+  "author": "Sanzay Dahal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanjaya1996/proShop-EcommerceWebApp/issues"
+  },
+  "homepage": "https://github.com/sanjaya1996/proShop-EcommerceWebApp#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.5"
+  }
+}
