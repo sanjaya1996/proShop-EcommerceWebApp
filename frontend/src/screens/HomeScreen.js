@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Product from '../components/Product';
 import * as productActions from '../store/actions/productActions';
+import LoadingSpinner from '../components/LoadingSpinner';
+import Message from '../components/Message';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -19,9 +21,9 @@ const HomeScreen = () => {
     <>
       <h1>Latest Products</h1>
       {loading ? (
-        <h2>Loading...</h2>
+        <LoadingSpinner />
       ) : error ? (
-        <h3>{error}</h3>
+        <Message variant='danger' children={error} />
       ) : (
         <Row>
           {products.map((product) => (
