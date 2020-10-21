@@ -5,17 +5,9 @@ import {
   PRODUCT_LIST_FAIL,
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
-} from '../actions/productActions';
+} from '../constants/productConstants';
 
-const productListInitialState = {
-  products: [],
-};
-
-const productDetailsInitialState = {
-  product: { reviews: [] },
-};
-
-export const productListReducer = (state = productListInitialState, action) => {
+export const productListReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case PRODUCT_LIST_REQUEST:
       return {
@@ -40,7 +32,7 @@ export const productListReducer = (state = productListInitialState, action) => {
 };
 
 export const productDetailsReducer = (
-  state = productDetailsInitialState,
+  state = { product: { reviews: [] } },
   action
 ) => {
   switch (action.type) {
