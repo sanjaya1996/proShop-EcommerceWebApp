@@ -24,6 +24,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (user) {
     res.status(201).json({
+      // 201 is created something
       _id: user._id,
       name: user.name,
       email: user.email,
