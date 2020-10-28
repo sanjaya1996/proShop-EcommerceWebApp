@@ -1,6 +1,6 @@
 import express from 'express';
 
-import checkAuth from '../middleware/authMiddleware.js';
+import { checkAuth } from '../middleware/authMiddleware.js';
 import {
   addOrderItems,
   getMyOrders,
