@@ -7,18 +7,30 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import Message from '../components/Message';
 import * as userActions from '../store/actions/userActions';
 
-const UserListScreen = () => {
+const UserListScreen = ({ history }) => {
   const dispatch = useDispatch();
 
   const userList = useSelector((state) => state.userList);
   const { loading, users, error } = userList;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const userDelete = useSelector((state) => state.userDelete);
+  const { success: successDelete } = userDelete;
+
   useEffect(() => {
-    dispatch(userActions.listUsers());
-  }, [dispatch]);
+    if (userInfo && userInfo.isAdmin) {
+      dispatch(userActions.listUsers());
+    } else {
+      history.push('/login');
+    }
+  }, [dispatch, history, userInfo, successDelete]);
 
   const deleteHandler = (id) => {
-    console.log('delete');
+    if (window.confirm('Are you sure?')) {
+      dispatch(userActions.deleteUser(id));
+    }
   };
 
   return (
