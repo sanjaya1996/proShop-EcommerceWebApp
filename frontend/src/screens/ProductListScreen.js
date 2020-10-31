@@ -6,6 +6,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import Message from '../components/Message';
 
 import * as productActions from '../store/actions/productActions';
+import { PRODUCT_CREATE_RESET } from '../store/constants/productConstants';
 
 const ProductListScreen = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
@@ -21,18 +22,39 @@ const ProductListScreen = ({ history }) => {
     success: successDelete,
   } = productDelete;
 
+  const productCreate = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = productCreate;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(productActions.listProducts());
-    } else {
+    dispatch({ type: PRODUCT_CREATE_RESET });
+
+    if (!userInfo || !userInfo.isAdmin) {
       history.push('/login');
     }
-  }, [dispatch, history, userInfo, successDelete]);
+
+    if (successCreate) {
+      history.push(`/admin/product/${createdProduct._id}/edit`);
+    } else {
+      dispatch(productActions.listProducts());
+    }
+  }, [
+    dispatch,
+    history,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdProduct,
+  ]);
 
   const createProductHandler = () => {
-    console.log('create product');
+    dispatch(productActions.createProduct());
   };
 
   const deleteProductHandler = (id) => {
@@ -53,10 +75,12 @@ const ProductListScreen = ({ history }) => {
           </Button>
         </Col>
       </Row>
-      {loading || loadingDelete ? (
+      {loading || loadingDelete || loadingCreate ? (
         <LoadingSpinner />
-      ) : error || errorDelete ? (
-        <Message variant='danger'>{error || errorDelete}</Message>
+      ) : error || errorDelete || errorCreate ? (
+        <Message variant='danger'>
+          {error || errorDelete || errorCreate}
+        </Message>
       ) : (
         <Table striped responsive bordered hover size='sm'>
           <thead>
