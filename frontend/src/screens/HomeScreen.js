@@ -7,12 +7,13 @@ import * as productActions from '../store/actions/productActions';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Message from '../components/Message';
 
-const HomeScreen = () => {
+const HomeScreen = ({ match }) => {
   const dispatch = useDispatch();
+  const keyword = match.params.keyword;
 
   useEffect(() => {
-    dispatch(productActions.listProducts());
-  }, [dispatch]);
+    dispatch(productActions.listProducts(keyword));
+  }, [dispatch, keyword]);
 
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
