@@ -17,3 +17,45 @@ h2 {
 .rating span {
   margin: 0.08rem;
 }
+/* carousel */
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+  display: flex;
+}
+.carousel-caption {
+  position: absolute;
+  top: 0;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.carousel-caption h2 {
+  color: #fff;
+}
+
+.carousel img {
+  height: 300px;
+  padding: 40px;
+  margin: 40px;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.carousel a {
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .carousel-caption h2 {
+    font-size: 2.5vw;
+  }
+
+  h1 {
+    font-size: 4vw;
+  }
+
+  h2 {
+    font-size: 3.5vw;
+  }
+}

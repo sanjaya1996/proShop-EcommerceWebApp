@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Product from '../components/Product';
 import * as productActions from '../store/actions/productActions';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Message from '../components/Message';
 import Paginate from '../components/Paginate';
+import ProductCarousel from '../components/ProductCarousel';
+import Meta from '../components/Meta';
 
 const HomeScreen = ({ match }) => {
   const dispatch = useDispatch();
@@ -23,6 +26,14 @@ const HomeScreen = ({ match }) => {
 
   return (
     <>
+      <Meta />
+      {!keyword ? (
+        <ProductCarousel />
+      ) : (
+        <Link to='/' className='btn btn-light'>
+          Go Back
+        </Link>
+      )}
       <h1>Latest Products</h1>
       {loading ? (
         <LoadingSpinner />
