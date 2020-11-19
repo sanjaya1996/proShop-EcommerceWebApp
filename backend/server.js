@@ -3,15 +3,22 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 import morgan from 'morgan';
 import path from 'path';
+import passport from 'passport';
+import session from 'express-session';
 
 import connectDB from './config/db.js';
+import passportjs from './config/passport.js';
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import { notFound, erroHandler } from './middleware/errorMiddleware.js';
 
+//Load config
 dotenv.config();
+
+// Passport config
+passportjs(passport);
 
 connectDB();
 
@@ -22,6 +29,19 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(express.json());
+
+// Sessions
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);

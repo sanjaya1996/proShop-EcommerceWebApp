@@ -56,8 +56,17 @@ const LoginScreen = ({ location, history }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
-          <Button type='submit' variant='primary'>
+
+          <Button
+            type='submit'
+            variant='primary'
+            style={{ marginRight: '5px' }}
+          >
             Sign In
+          </Button>
+
+          <Button type='button' variant='danger'>
+            <i className='fab fa-google left'> Sign In With Google</i>
           </Button>
         </Form>
 
