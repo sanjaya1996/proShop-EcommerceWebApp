@@ -26,10 +26,23 @@ const LoginScreen = ({ location, history }) => {
     }
   }, [userInfo, history, redirect]);
 
+  useEffect(() => {
+    if (!userInfo) {
+      dispatch(userActions.getGoogleUserInfo());
+    }
+    // eslint-disable-next-line
+  }, []);
+
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(userActions.login(email, password));
   };
+
+  const signInWithGoogleHandler = (e) => {
+    e.preventDefault();
+    window.location.href = '/api/auth/google';
+  };
+
   return (
     <>
       <Meta title='ProShop | Login' />
@@ -65,7 +78,11 @@ const LoginScreen = ({ location, history }) => {
             Sign In
           </Button>
 
-          <Button type='button' variant='danger'>
+          <Button
+            type='button'
+            variant='danger'
+            onClick={signInWithGoogleHandler}
+          >
             <i className='fab fa-google left'> Sign In With Google</i>
           </Button>
         </Form>

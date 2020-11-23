@@ -59,12 +59,47 @@ export const login = (email, password) => {
   };
 };
 
+export const getGoogleUserInfo = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: USER_LOGIN_REQUEST });
+
+      const { data } = await axios.get('/api/auth/currentuser');
+
+      dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+
+      localStorage.setItem('userInfo', JSON.stringify(data));
+    } catch (error) {
+      dispatch({
+        type: USER_LOGIN_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
 export const logout = () => {
-  return (dispatch) => {
-    localStorage.removeItem('userInfo');
-    dispatch({ type: USER_LOGOUT });
-    dispatch({ type: ORDER_LIST_MY_RESET });
-    dispatch({ type: USER_DETAILS_RESET });
+  return async (dispatch, getState) => {
+    try {
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      localStorage.removeItem('userInfo');
+      dispatch({ type: USER_LOGOUT });
+      dispatch({ type: ORDER_LIST_MY_RESET });
+      dispatch({ type: USER_DETAILS_RESET });
+      document.location.href = '/login';
+
+      if (userInfo.googleId) {
+        await axios.get('/api/auth/logout');
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 };
 
