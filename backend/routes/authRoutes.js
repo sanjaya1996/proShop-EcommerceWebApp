@@ -1,5 +1,6 @@
 import express from 'express';
 import passport from 'passport';
+import session from 'express-session';
 
 import generateToken from '../utils/generateToken.js';
 
@@ -10,6 +11,10 @@ const router = express.Router();
 
 router.get(
   '/google',
+  (req, res, next) => {
+    req.session.redirectPath = req.query.redirect;
+    next();
+  },
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
@@ -20,7 +25,8 @@ router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('/login');
+    const redirect = req.session.redirectPath;
+    res.redirect(`/login?redirect=${redirect}`);
   }
 );
 

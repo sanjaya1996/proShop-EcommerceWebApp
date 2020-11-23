@@ -1,4 +1,5 @@
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import pkg from 'passport-google-oauth20';
+const { Strategy: GoogleStrategy } = pkg;
 import mongoose from 'mongoose';
 
 import User from '../models/userModel.js';

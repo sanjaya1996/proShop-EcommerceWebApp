@@ -40,7 +40,7 @@ const LoginScreen = ({ location, history }) => {
 
   const signInWithGoogleHandler = (e) => {
     e.preventDefault();
-    window.location.href = '/api/auth/google';
+    window.location.href = `/api/auth/google?redirect=${redirect}`;
   };
 
   return (

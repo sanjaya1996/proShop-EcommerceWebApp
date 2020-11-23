@@ -88,15 +88,15 @@ export const logout = () => {
         userLogin: { userInfo },
       } = getState();
 
+      if (userInfo.googleId) {
+        await axios.get('/api/auth/logout');
+      }
+
       localStorage.removeItem('userInfo');
       dispatch({ type: USER_LOGOUT });
       dispatch({ type: ORDER_LIST_MY_RESET });
       dispatch({ type: USER_DETAILS_RESET });
       document.location.href = '/login';
-
-      if (userInfo.googleId) {
-        await axios.get('/api/auth/logout');
-      }
     } catch (err) {
       console.error(err);
     }
