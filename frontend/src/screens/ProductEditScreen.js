@@ -51,7 +51,7 @@ const ProductEditScreen = ({ match, history }) => {
         setDescription(product.description);
       }
     }
-  }, [dispatch, history, productId, product, successUpdate]);
+  }, [dispatch, productId, product, history, successUpdate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -75,9 +75,6 @@ const ProductEditScreen = ({ match, history }) => {
     formData.append('image', file);
     setUploading(true);
 
-    console.log('FormData>>');
-    console.log(formData);
-
     try {
       const config = {
         headers: {
@@ -86,8 +83,7 @@ const ProductEditScreen = ({ match, history }) => {
       };
 
       const { data } = await axios.post('/api/upload', formData, config);
-      console.log('response Data>>');
-      console.log(data);
+
       setImage(data);
       setUploading(false);
     } catch (error) {
