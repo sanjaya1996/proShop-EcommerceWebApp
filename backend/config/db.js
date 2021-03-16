@@ -1,8 +1,17 @@
 import mongoose from 'mongoose';
 
+const {
+  MONGO_USER_PROSHOP: user,
+  MONGO_PASSWORD_PROSHOP: password,
+  MONGO_DBNAME_PROSHOP: db,
+  MONGO_CLUSTER_URL_PROSHOP: clusterUrl,
+} = process.env;
+
+const uri = `mongodb+srv://${user}:${password}@${clusterUrl}/${db}?retryWrites=true&w=majority`;
+
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI_PROSHOP, {
+    const conn = await mongoose.connect(uri, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useCreateIndex: true,
