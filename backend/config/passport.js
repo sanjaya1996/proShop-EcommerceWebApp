@@ -1,10 +1,9 @@
-import pkg from 'passport-google-oauth20';
-const { Strategy: GoogleStrategy } = pkg;
-import mongoose from 'mongoose';
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const mongoose = require('mongoose');
 
-import User from '../models/userModel.js';
+const User = require('../models/userModel');
 
-export default function (passport) {
+module.exports = function (passport) {
   passport.use(
     new GoogleStrategy(
       {
@@ -41,4 +40,4 @@ export default function (passport) {
   passport.deserializeUser((id, done) => {
     User.findById(id, (err, user) => done(err, user));
   });
-}
+};

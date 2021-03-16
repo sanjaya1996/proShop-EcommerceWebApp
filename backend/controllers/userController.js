@@ -1,7 +1,7 @@
-import asyncHandler from 'express-async-handler';
+const asyncHandler = require('express-async-handler');
 
-import User from '../models/userModel.js';
-import generateToken from '../utils/generateToken.js';
+const User = require('../models/userModel.js');
+const generateToken = require('../utils/generateToken.js');
 
 // @desc    Register a new user
 // @route   POST /api/users
@@ -165,7 +165,7 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 });
 
-export {
+module.exports = {
   authUser,
   getUserProfile,
   registerUser,

@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
-import asyncHandler from 'express-async-handler';
-import User from '../models/userModel.js';
+const jwt = require('jsonwebtoken');
+const asyncHandler = require('express-async-handler');
+const User = require('../models/userModel.js');
 
 const checkAuth = asyncHandler(async (req, res, next) => {
   let token;
@@ -33,4 +33,4 @@ const admin = asyncHandler(async (req, res, next) => {
     throw new Error('Not authorized as an admin');
   }
 });
-export { checkAuth, admin };
+module.exports = { checkAuth, admin };

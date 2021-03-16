@@ -1,20 +1,20 @@
-import _ from './config/env.js';
-import express from 'express';
+const express = require('express');
+require('dotenv').config();
 
-import colors from 'colors';
-import morgan from 'morgan';
-import path from 'path';
-import passport from 'passport';
-import session from 'express-session';
+const colors = require('colors');
+const morgan = require('morgan');
+const path = require('path');
+const passport = require('passport');
+const session = require('express-session');
 
-import connectDB from './config/db.js';
-import passportjs from './config/passport.js';
-import productRoutes from './routes/productRoutes.js';
-import userRoutes from './routes/userRoutes.js';
-import orderRoutes from './routes/orderRoutes.js';
-import uploadRoutes from './routes/uploadRoutes.js';
-import authRoutes from './routes/authRoutes.js';
-import { notFound, erroHandler } from './middleware/errorMiddleware.js';
+const connectDB = require('./config/db.js');
+const passportjs = require('./config/passport.js');
+const productRoutes = require('./routes/productRoutes.js');
+const userRoutes = require('./routes/userRoutes.js');
+const orderRoutes = require('./routes/orderRoutes.js');
+const uploadRoutes = require('./routes/uploadRoutes.js');
+const authRoutes = require('./routes/authRoutes.js');
+const { notFound, erroHandler } = require('./middleware/errorMiddleware.js');
 
 // Passport config
 passportjs(passport);
@@ -23,11 +23,13 @@ connectDB();
 
 const app = express();
 
+app.use(express.json());
+
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
+} else {
+  app.set('trust proxy', 1);
 }
-
-app.use(express.json());
 
 // Sessions
 app.use(
@@ -52,7 +54,6 @@ app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID_PROSHOP)
 );
 
-const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
 // if (process.env.NODE_ENV !== 'production') {

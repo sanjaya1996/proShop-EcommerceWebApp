@@ -1,8 +1,8 @@
-import express from 'express';
-import passport from 'passport';
-import session from 'express-session';
+const express = require('express');
+const passport = require('passport');
+const session = require('express-session');
 
-import generateToken from '../utils/generateToken.js';
+const generateToken = require('../utils/generateToken');
 
 const router = express.Router();
 
@@ -53,4 +53,4 @@ router.get('/logout', (req, res) => {
   res.redirect(originUri);
 });
 
-export default router;
+module.exports = router;
