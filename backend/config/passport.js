@@ -10,7 +10,7 @@ export default function (passport) {
       {
         clientID: process.env.GOOGLE_CLIENT_ID_PROSHOP,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET_PROSHOP,
-        callbackURL: '/api/auth/google/callback',
+        callbackURL: `${process.env.API_URI_PROSHOP}/api/auth/google/callback`,
       },
       async (accessToken, refreshToken, profile, done) => {
         const newUser = {

@@ -6,6 +6,8 @@ import generateToken from '../utils/generateToken.js';
 
 const router = express.Router();
 
+const originUri = process.env.ORIGIN_URI_PROSHOP;
+
 // @desc Auth with Google
 // @route GET /auth/google
 
@@ -26,7 +28,7 @@ router.get(
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     const redirect = req.session.redirectPath;
-    res.redirect(`/login?redirect=${redirect}`);
+    res.redirect(`${originUri}/login?redirect=${redirect}`);
   }
 );
 
@@ -48,7 +50,7 @@ router.get('/currentuser', (req, res) => {
 
 router.get('/logout', (req, res) => {
   req.logout();
-  res.redirect('/');
+  res.redirect(originUri);
 });
 
 export default router;
