@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const {
   MONGO_USER_PROSHOP: user,
